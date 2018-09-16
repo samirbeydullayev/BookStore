@@ -42,7 +42,9 @@
 		<link href="<?php echo base_url('assets/')?>css/animations.css" rel="stylesheet">
 		<link href="<?php echo base_url('assets/')?>plugins/owlcarousel2/assets/owl.carousel.min.css" rel="stylesheet">
 		<link href="<?php echo base_url('assets/')?>plugins/owlcarousel2/assets/owl.theme.default.min.css" rel="stylesheet">
-		<link href="<?php echo base_url('assets/')?>plugins/hover/hover-min.css" rel="stylesheet">		
+		<link href="<?php echo base_url('assets/')?>plugins/hover/hover-min.css" rel="stylesheet">	
+		
+		<link rel="stylesheet" href="<?php echo base_url("assets/stars/dist/themes/")?>fontawesome-stars.css">	
 
 		
 		<!-- The Project's core CSS file -->

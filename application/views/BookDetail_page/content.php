@@ -1,4 +1,6 @@
 <!-- breadcrumb start -->
+
+<?php $user = $this->session->userdata("user"); ?>
 			<!-- ================ -->
 			<div class="breadcrumb-container">
 				<div class="container">
@@ -23,7 +25,7 @@
 
 							<!-- page-title start -->
 							<!-- ================ -->
-							<h1 class="page-title"><?php echo $book->name ?></h1>
+							<h1 class="page-title"><?php echo $book->name;?></h1>
 							<div class="separator-2"></div>
 							<!-- page-title end -->
 
@@ -51,7 +53,7 @@
 									</div>
 									<!-- pills end -->
 								</div>
-								<div class="col-md-8 pv-30">
+								<div class="col-md-8 pv-30 book_detail">
 									<h2>Description</h2>
 									<p><?php echo $book->description ?></p>
 									<hr class="mb-10">
@@ -63,7 +65,6 @@
 											<i class="fa fa-star text-default"></i>
 											<i class="fa fa-star"></i>
 										</span>
-										<a href="#" class="wishlist"><i class="fa fa-heart-o pl-10 pr-5"></i>Wishlist</a>
 										<ul class="pl-20 pull-right social-links circle small clearfix margin-clear animated-effect-1">
 											<li class="twitter"><a target="_blank" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
 											<li class="googleplus"><a target="_blank" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a></li>
@@ -75,7 +76,12 @@
 										<span class="product price"><i class="icon-tag pr-10"></i>$<?php echo  ($book->discount == 0)
 										? $book->price : $book->price-($book->discount*$book->price)/100 ?></span>
 										<div class="product elements-list pull-right clearfix">
-										   <button class="btn btn-success" >Buy</button>
+										   <a 
+										   data-url = "<?php echo base_url("user_buy_books") ?>"
+										   data-isbn = "<?php echo $book->isbn ?>"
+										   class="btn btn-info buy_btn" >
+										   Buy <i class="fa fa-dollar"></i>
+										</a>
 										</div>
 									</div>
 								</div>
@@ -144,76 +150,47 @@
 										</div>
 										<!-- comment end -->
 
-										<!-- comment start -->
-										<div class="comment clearfix">
-											<div class="comment-avatar">
-												<img class="img-circle" src="<?php echo base_url("assets/") ?>images/avatar.jpg" alt="avatar">
-											</div>
-											<header>
-												<h3>Really Nice!</h3>
-												<div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 10:31</div>
-											</header>
-											<div class="comment-content">
-												<div class="comment-body clearfix">
-													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
-													<a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
-												</div>
-											</div>
-										</div>
-										<!-- comment end -->
-
-										<!-- comment start -->
-										<div class="comment clearfix">
-											<div class="comment-avatar">
-												<img class="img-circle" src="<?php echo base_url("assets/") ?>images/avatar.jpg" alt="avatar">
-											</div>
-											<header>
-												<h3>Worth to Buy!</h3>
-												<div class="comment-meta"> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star text-default"></i> <i class="fa fa-star"></i> | Today, 09:31</div>
-											</header>
-											<div class="comment-content">
-												<div class="comment-body clearfix">
-													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo </p>
-													<a href="blog-post.html" class="btn-sm-link link-dark pull-right"><i class="fa fa-reply"></i> Reply</a>
-												</div>
-											</div>
-										</div>
+								
 										<!-- comment end -->
 									</div>
 									<!-- comments end -->
 
 									<!-- comments form start -->
+                                 <?php if($user){ ?>
+
 									<div class="comments-form">
 										<h2 class="title">Add your Review</h2>
-										<form role="form" id="comment-form">
+										
 											<div class="form-group has-feedback">
 												<label for="name4">Name</label>
-												<input type="text" class="form-control" id="name4" placeholder="" name="name4" required>
+												<input type="text" class="form-control" disabled value="<?php echo $user->username ?>"  id="name4" placeholder="" name="name4" >
 												<i class="fa fa-user form-control-feedback"></i>
 											</div>
-											<div class="form-group has-feedback">
-												<label for="subject4">Subject</label>
-												<input type="text" class="form-control" id="subject4" placeholder="" name="subject4" required>
-												<i class="fa fa-pencil form-control-feedback"></i>
-											</div>
+			
 											<div class="form-group">
 												<label>Rating</label>
 												<select class="form-control" id="review">
-													<option value="five">5</option>
-													<option value="four">4</option>
-													<option value="three">3</option>
-													<option value="two">2</option>
-													<option value="one">1</option>
+													<option value="5">5</option>
+													<option value="4">4</option>
+													<option value="3">3</option>
+													<option value="2">2</option>
+													<option value="1">1</option>
 												</select>
 											</div>
 											<div class="form-group has-feedback">
 												<label for="message4">Message</label>
-												<textarea class="form-control" rows="8" id="message4" placeholder="" name="message4" required></textarea>
+												<textarea class="form-control" rows="8" id="text_message" placeholder="" name="message4" required></textarea>
 												<i class="fa fa-envelope-o form-control-feedback"></i>
 											</div>
-											<input type="submit" value="Submit" class="btn btn-default">
-										</form>
+											<button 
+											id="review_btn"
+											class="btn btn-info" 
+											data-url = "<?php echo base_url("review") ?>"
+                                             
+											 >Send message</button>
+									
 									</div>
+								<?php } ?>
 									<!-- comments form end -->
 								</div>
 							</div>
@@ -226,15 +203,16 @@
 								<div class="block clearfix">
 									<h3 class="title">Related Products</h3>
 									<div class="separator-2"></div>
+									<?php foreach ($related_books as $r_book) { ?>
 									<div class="media margin-clear">
 										<div class="media-left">
 											<div class="overlay-container">
-												<img class="media-object" src="<?php echo base_url("assets/") ?>images/product-5.jpg" alt="blog-thumb">
+												<img class="media-object" src="<?php echo base_url("panel/uploads/books_image/$r_book->img_url") ?>" alt="blog-thumb">
 												<a href="shop-product.html" class="overlay-link small"><i class="fa fa-link"></i></a>
 											</div>
 										</div>
 										<div class="media-body">
-											<h6 class="media-heading"><a href="shop-product.html">Lorem ipsum dolor sit amet</a></h6>
+											<h6 class="media-heading"><a href="shop-product.html"><?php echo $r_book->name ?></a></h6>
 											<p class="margin-clear">
 												<i class="fa fa-star text-default"></i>
 												<i class="fa fa-star text-default"></i>
@@ -242,69 +220,18 @@
 												<i class="fa fa-star text-default"></i>
 												<i class="fa fa-star text-default"></i>
 											</p>
-											<p class="price">$99.00</p>
+											<p class="price">
+												<?php if($r_book->discount != 0){ ?>
+													$<?php echo $r_book->price-($r_book->discount*$r_book->price)/100; ?>
+												<?php } else { ?>
+                                                       $<?php echo $r_book->price ?>
+												<?php } ?>
+											</p>
 										</div>
 										<hr>
 									</div>
-									<div class="media margin-clear">
-										<div class="media-left">
-											<div class="overlay-container">
-												<img class="media-object" src="<?php echo base_url("assets/") ?>images/product-6.jpg" alt="blog-thumb">
-												<a href="shop-product.html" class="overlay-link small"><i class="fa fa-link"></i></a>
-											</div>
-										</div>
-										<div class="media-body">
-											<h6 class="media-heading"><a href="shop-product.html">Eum repudiandae ipsam</a></h6>
-											<p class="margin-clear">
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star"></i>
-											</p>
-											<p class="price">$299.00</p>
-										</div>
-										<hr>
-									</div>
-									<div class="media margin-clear">
-										<div class="media-left">
-											<div class="overlay-container">
-												<img class="media-object" src="<?php echo base_url("assets/") ?>images/product-7.jpg" alt="blog-thumb">
-												<a href="shop-product.html" class="overlay-link small"><i class="fa fa-link"></i></a>
-											</div>
-										</div>
-										<div class="media-body">
-											<h6 class="media-heading"><a href="shop-product.html">Quia aperiam velit fuga</a></h6>
-											<p class="margin-clear">
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star"></i>
-											</p>
-											<p class="price">$9.99</p>
-										</div>
-										<hr>
-									</div>
-									<div class="media margin-clear">
-										<div class="media-left">
-											<div class="overlay-container">
-												<img class="media-object" src="<?php echo base_url("assets/") ?>images/product-8.jpg" alt="blog-thumb">
-												<a href="shop-product.html" class="overlay-link small"><i class="fa fa-link"></i></a>
-											</div>
-										</div>
-										<div class="media-body">
-											<h6 class="media-heading"><a href="shop-product.html">Fugit non natus officiis</a></h6>
-											<p class="margin-clear">
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star text-default"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-											</p>
-											<p class="price">$399.00</p>
-										</div>
-									</div>
+								<?php } ?>
+						
 								</div>
 							</div>
 						</aside>

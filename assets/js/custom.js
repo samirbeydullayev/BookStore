@@ -142,25 +142,22 @@
          			}else{
          				$(".header-dropdown-buttons").html(data);
 
-         				 $(".add_btn").on("click",function(){
- 	if(c%2==0){
- 		$(".book_list").css("display","block")
+                      $(".add_btn").on("click",function(){
+                          if(c%2==0){
+                             $(".book_list").css("display","block")
 
- 	}else{
- 		$(".book_list").css("display","none")
- 	}
- 	c++
+                         }else{
+                             $(".book_list").css("display","none")
+                         }
+                         c++
 
- })
-
-
-         			}
-         		}
-
-         	})
+                     })
 
 
+                  }
+              }
 
+          })
 
          })
 
@@ -194,7 +191,78 @@
 
 
 
+      // userin kitab almasindaki ajax 
+
+    $(".book_detail").on("click",".buy_btn",function() {
+     var $url = $(this).data("url");
+     var $isbn = $(this).data("isbn");
+
+
+     $.ajax({
+      type: 'POST',
+      url: $url,
+      dataType: 'JSON',
+      data: {'isbn':$isbn},
+      success: function (res) {
+
+        if (res=="user_error") {
+
+           swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Please,registered',
+
+        })
+       }else if(res=="success"){
+
+           swal({
+            type: 'success',
+            title: 'Congrulation',
+            text: 'Book successfully buy',
+
+        })
+
+       }else if(res=="error"){
+
+           swal({
+            type: 'error',
+            title: 'OOOPS !!',
+            text: 'Book dont  buy !',
+
+        })
+
+       }else{
+           swal({
+            type: 'warning',
+            title: 'OOOPS !!',
+            text: 'This book has been buy!',
+
+        })
+       }
+
+   }
+              ////////////
+
+          })
+
+
+
+ })
+   
+      // userin kitab almasindaki ajax  -END
+
+
+    // REWIEV HISSEININ AJAXI
+
+
+
+
+
+
+
+
+
 
 	}); // End document ready
 
- })(this.jQuery);
+})(this.jQuery);

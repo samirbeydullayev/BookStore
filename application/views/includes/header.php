@@ -68,9 +68,12 @@
 											<!-- mega-menu start -->
 
 											<!-- mega-menu end -->
+											<?php $user = $this->session->userdata("user"); ?>
+											<?php if($user){ ?>
 											<li class="dropdown ">
-												<a class="dropdown-toggle" data-toggle="dropdown" href="#">Features</a>
+												<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo base_url("my_books") ?>">My Books</a>
 											</li>
+										<?php } ?>
 											<!-- mega-menu start -->
 											<li class="dropdown  mega-menu narrow">
 												<a href="#" class="dropdown-toggle" data-toggle="dropdown">Components</a>

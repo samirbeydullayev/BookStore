@@ -60,6 +60,15 @@ $route['user_login'] = 'Login/user_login';
 $route['login_post'] = 'Login/login_post';
 $route['forgot_password'] = 'Login/forgot_password';
 $route['book_detail/(:any)'] = 'Book/index/$1';
+$route['user_buy_books'] = 'Book/user_buy_books';
+$route['my_books'] = 'Book/my_books';
+$route['review'] = 'Book/review';
+
+
+
+
+
+
 
 
 
