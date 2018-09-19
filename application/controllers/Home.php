@@ -31,6 +31,7 @@ class Home extends CI_Controller {
 	// ******************************************
 
 
+
 		$view_data =  new stdClass();
 		$view_data->view_folder = "Home_page";
 		$view_data->books = $result;
@@ -122,6 +123,25 @@ class Home extends CI_Controller {
 			echo json_encode($render);
 
 		}
+	}
+
+	public function book_search()
+	{
+		$input_value = $this->input->post("value");
+
+
+
+		$match = $input_value;
+
+		$result = $this->Books_model->book_search($match);
+		header('Content-Type: application/json');
+		echo json_encode($result);
+		 
+
+
+
+		
+    
 	}
 
 	 // *********************************************************************

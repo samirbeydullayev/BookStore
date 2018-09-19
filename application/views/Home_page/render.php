@@ -1,6 +1,26 @@
 
-<div class="btn-group dropdown">
+<div class="btn-group dropdown head_search">
 	<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i></button>
+	<ul class="dropdown-menu dropdown-menu-right dropdown-animation ">
+															<li>
+																
+																	<div
+																	 class="form-group has-feedback book_search" >
+																		<input type="text"
+																		 class="form-control"
+																		  placeholder="Search"
+																		  data-url = "<?php echo base_url("Home/book_search")?>" >
+																		<i class="icon-search form-control-feedback"></i>
+																	</div>
+
+																
+															</li>
+															<div class="bookList" style="text-align: center;">
+                                                            
+
+															 </div>
+														</ul>
+
 </div>
 <div class="btn-group dropdown basket">
 	<button type="button" class="btn dropdown-toggle add_btn" data-toggle="dropdown"><i class="icon-basket-1"></i><span class="cart-count default-bg">

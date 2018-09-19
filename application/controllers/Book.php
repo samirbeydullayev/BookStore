@@ -39,6 +39,13 @@ class Book extends CI_Controller {
 		);
 		$related_books = $this->Books_model->related_books($related_where,("rand()"),$limit);
 
+		// Kitabin kommenlerinin GETIRILMESI
+		$where = array(
+        
+        "book_id" => $id
+	   );
+	   $one_book_reviews = $this->Books_model->one_book_review($where);
+
 
 
 
@@ -48,6 +55,8 @@ class Book extends CI_Controller {
 		$view_data->book = $result;
 		$view_data->categories = $categories;
 		$view_data->related_books = $related_books;
+		$view_data->one_book_reviews = $one_book_reviews;
+
 
 
 
@@ -122,6 +131,8 @@ class Book extends CI_Controller {
 		}
 
 	}
+    
+    // Userin kiatablari bolmesi
 	public function my_books()
 	{
 		$user = $this->session->userdata("user");
@@ -139,6 +150,76 @@ class Book extends CI_Controller {
 		$view_data->my_books = $my_books;
 		$this->load->view("$view_data->view_folder/index",$view_data);
 		
+	}
+    // Review Hissesi hemde vote hissesi
+	public function review()
+	{
+
+		 // Hal hazirdaki user
+	  $user = $this->session->userdata("user");
+
+          // vote ve review
+	   $vote = $this->input->post("vote");
+	   $review = $this->input->post("review");
+
+	   // burdaki bookiun id-dinin tapilmasi
+	   $book_isbn = $this->input->post("book_isbn");
+
+	   $wher = array( 
+        "isbn" =>$book_isbn
+	   );
+	   $book = $this->Books_model->get($wher);
+
+	   // Book id-din uyqun olan commentlerin siyasini one_book_reviews edir
+	    $where = array(
+        
+        "book_id" => $book->id
+	   );
+	   $one_book_reviews = $this->Books_model->one_book_review($where);
+
+      $exsists = true;
+	   foreach ($one_book_reviews as $obr ) {
+	             if($obr->user_id==$user->id){
+                    $exsists = false;
+                    break;
+	             }
+	   }
+
+
+
+
+	   if ($exsists) {
+
+	   	 $data = array(
+	   	"user_id"    =>  $user->id,
+	   	"book_id"    =>  $book->id,
+	   	"vote"       =>  $vote,
+	   	"review"     =>  $review,
+	   	"review_time"  =>  date("Y-m-d H:i:s")
+	   );
+
+	   $result = $this->Books_model->review_vote($data);
+
+
+	   
+	   $one_book_reviews = $this->Books_model->one_book_review($where);
+
+	   $view_data = new stdClass();
+	   $view_data->view_folder = "BookDetail_page";
+	   $view_data->one_book_reviews = $one_book_reviews;
+   
+
+
+	  $render_page =  $this->load->view("$view_data->view_folder/render",$view_data,TRUE);
+	  echo $render_page;
+
+
+	   	
+	   } else {
+	    echo "error";
+	   }
+	   
+
 	}
 
 }
